@@ -1,20 +1,29 @@
-import request from 'supertest-as-promised';
-import User from '../modules/user/user.model';
+export const sanitizeRegexes = async (regexArray) => {
+  try {
+    const sanitizedRegexes = [];
+    regexArray.forEach((regex) => {
+      const divide = regex.split('/');
+      if (divide.length === 2) {
+        if (divide[0].length > 1) {
+          sanitizedRegexes.push(`/${divide[0]}/`);
+          return;
+        }
+        sanitizedRegexes.push(`/${divide[1]}/`);
+        return;
+      }
 
+      if (divide.length === 1) {
+        if (divide[0] === '') {
+          sanitizedRegexes.push('');
+          return;
+        }
+        sanitizedRegexes.push(`/${divide[0]}/`);
+        return;
+      }
 
-// adding a comp parameter to solve async issues
-export const login = async (server) => {
-  const user = await User.create({ email: 'user@email.com', password: 'password' });
-  const res = await request(server).post('/api/ampuser/login').send({
-    email: user.email,
-    password: user.password,
-  });
-  return {
-    auth: { Authorization: `Bearer ${res.body.token}` },
-    user,
-  };
-};
-
-export const nuke = async () => {
-  await User.destroy({ where: {} });
+      sanitizedRegexes.push(regex);
+    });
+  } catch (e) {
+    console.log(e);
+  }
 };
