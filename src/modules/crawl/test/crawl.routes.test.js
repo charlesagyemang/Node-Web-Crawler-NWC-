@@ -10,4 +10,17 @@ describe('Crowl::Routes', async () => {
     expect(res.body).toHaveProperty('message');
     expect(res.body.message).toBe('Heyy Me That I Am Model Crawl');
   });
+
+  it('Should Return 400 Since RequestBody Doesnt Pass Validation', async () => {
+    const res = await request(server).post('/api/crawl/').send({
+      domain: 'pianoafrikonline.com',
+      regex: ['/koobi/', 'post'],
+      numLevels: 3,
+    });
+
+
+    expect(res.statusCode).toBe(HTTPStatus.BAD_REQUEST);
+    expect(res.body.name).toBe('ValidationError');
+    expect(res.body.errors[0].field).toBe('regexes');
+  });
 });
