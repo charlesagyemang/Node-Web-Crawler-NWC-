@@ -1,15 +1,25 @@
 import HTTPStatus from 'http-status';
-import { sanitizeRegexField } from '../../helpers/test_helpers';
+import { sanitizeRegexField, crawlSiteAdvance, sanitizeDomain } from '../../helpers/app_helpers';
 
 export const crawlSite = async (req, res) => {
   try {
+    // Get Regexes And Prepare For sanitization
     const regexArray = req.body.regexes;
 
+    // call sanitize on gotten regexes after validation has passed
     const sanitizedRegexes = await sanitizeRegexField(regexArray);
 
+    // sanitize url
+    const sanitizedDomain = await sanitizeDomain(req.body.domain);
+
+    // call initiate crawling and save reponses as and when the results get ready
+
+    await crawlSiteAdvance(sanitizedRegexes, sanitizeDomain);
+
     res.status(HTTPStatus.OK).json({
-      message: 'Heyy Me That I Am Model Crawl',
+      message: 'File Saved In Path ./crawlResults',
       reg: sanitizedRegexes,
+      dom: sanitizedDomain,
     });
   } catch (e) {
     console.log(e);
