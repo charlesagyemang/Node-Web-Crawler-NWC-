@@ -23,4 +23,16 @@ describe('Crowl::Routes', async () => {
     expect(res.body.name).toBe('ValidationError');
     expect(res.body.errors[0].field).toBe('regexes');
   });
+
+  it('Should Return 200 Ok Since RequestBody Conforms To Expectation', async () => {
+    const res = await request(server).post('/api/crawl/').send({
+      domain: 'pianoafrikonline.com',
+      regexes: ['/koobi/', 'post'],
+      numLevels: 3,
+    });
+
+    console.log(res.body);
+    expect(res.statusCode).toBe(HTTPStatus.OK);
+    expect(res.body).toHaveProperty('message');
+  });
 });
