@@ -5,6 +5,7 @@ const errors = (app) => {
   app.use((err, req, res, next) => {
     res.status(err.status || HTTPStatus.INTERNAL_SERVER_ERROR)
           .json({ ...err });
+    next();
   });
 };
 
