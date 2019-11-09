@@ -31,6 +31,16 @@ describe('Crowl::Routes', async () => {
       numLevels: 3,
     });
 
+    expect(res.statusCode).toBe(HTTPStatus.OK);
+  });
+
+  it('Should Sanitize Regexes To Conform With App\'s Format', async () => {
+    const res = await request(server).post('/api/crawl/').send({
+      domain: 'pianoafrikonline.com',
+      regexes: ['/koobi/', 'post'],
+      numLevels: 3,
+    });
+
     console.log(res.body);
     expect(res.statusCode).toBe(HTTPStatus.OK);
     expect(res.body).toHaveProperty('message');
