@@ -14,7 +14,7 @@ export const crawlSite = async (req, res) => {
 
     // call initiate crawling and save reponses as and when the results get ready
 
-    await crawlSiteAdvance(sanitizedRegexes, sanitizeDomain);
+    await crawlSiteAdvance(sanitizedRegexes, sanitizedDomain);
 
     res.status(HTTPStatus.OK).json({
       message: 'File Saved In Path ./crawlResults',

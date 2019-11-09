@@ -48,12 +48,13 @@ describe('Crowl::Routes', async () => {
 
   it.only('Should Site And Pull 5 regexes given and save file', async () => {
     const res = await request(server).post('/api/crawl/').send({
-      domain: 'https://pianoafrikonline.com',
+      domain: 'https://www.pianoafrikonline.com',
       regexes: [
+        '',
         '/book-us/',
         'contact/',
-        'courses/',
-        '/faq',
+        '/courses',
+        'faq',
         '/terms-and-conditions/',
       ],
       numLevels: 3,
@@ -62,5 +63,5 @@ describe('Crowl::Routes', async () => {
     expect(res.statusCode).toBe(HTTPStatus.OK);
     expect(res.body).toHaveProperty('dom');
     expect(res.body.message).toBe('File Saved In Path ./crawlResults');
-  });
+  }, 30000);
 });

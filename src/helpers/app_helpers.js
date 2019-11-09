@@ -52,12 +52,12 @@ export const save = async (urlString, data) => {
     } else {
       path = (pathArray[i]) ? `${path}/${pathArray[i].replace(/\.html?$/, '')}` : `${path}index`;
       fs.writeFileSync(`${path}.ndjson`, data);
+      console.log('saved as json & ndjson', urlString);
     }
   }
 
   return true;
 };
-
 
 export const crawlSiteAdvance = async (regexes, scrapeUrl) => {
   try {
@@ -77,6 +77,7 @@ export const crawlSiteAdvance = async (regexes, scrapeUrl) => {
             obj[`${validUrlExtention.split('/')[0]}`] = data.result.body;
             mesophyll += `\n${JSON.stringify(obj)}`;
           }
+          console.log(data);
           save('https://crawlResults.com/', mesophyll);
         }
       }

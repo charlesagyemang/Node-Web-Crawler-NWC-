@@ -3,7 +3,7 @@ import Joi from 'joi';
 export default {
   crawlData: {
     body: {
-      domain: Joi.string().uri().required(),
+      domain: Joi.string().required(),
       regexes: Joi.array().required(),
       numLevels: Joi.number().required(),
     },
