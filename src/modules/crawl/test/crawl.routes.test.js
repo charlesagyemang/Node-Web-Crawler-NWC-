@@ -42,7 +42,25 @@ describe('Crowl::Routes', async () => {
     });
 
     console.log(res.body);
-    // expect(res.statusCode).toBe(HTTPStatus.OK);
-    // expect(res.body).toHaveProperty('message');
+    expect(res.statusCode).toBe(HTTPStatus.OK);
+    expect(res.body).toHaveProperty('dom');
+  });
+
+  it.only('Should Site And Pull 5 regexes given and save file', async () => {
+    const res = await request(server).post('/api/crawl/').send({
+      domain: 'https://pianoafrikonline.com',
+      regexes: [
+        '/book-us/',
+        'contact/',
+        'courses/',
+        '/faq',
+        '/terms-and-conditions/',
+      ],
+      numLevels: 3,
+    });
+
+    expect(res.statusCode).toBe(HTTPStatus.OK);
+    expect(res.body).toHaveProperty('dom');
+    expect(res.body.message).toBe('File Saved In Path ./crawlResults');
   });
 });

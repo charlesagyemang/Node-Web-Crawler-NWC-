@@ -51,7 +51,6 @@ export const save = async (urlString, data) => {
       if (!fs.existsSync(path)) fs.mkdirSync(path);
     } else {
       path = (pathArray[i]) ? `${path}/${pathArray[i].replace(/\.html?$/, '')}` : `${path}index`;
-      fs.writeFileSync(`${path}.json`, data);
       fs.writeFileSync(`${path}.ndjson`, data);
     }
   }
