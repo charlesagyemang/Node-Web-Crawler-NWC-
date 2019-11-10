@@ -149,7 +149,6 @@ export const crawlAndMatchRegAndReturnAFile = async (
 
       const mappedData = await readFromArray(regexes, linkParker);
       await save('https://matchResults.com/', JSON.stringify({ result: mappedData }));
-      console.log(mappedData);
       console.log('Working.......');
     });
 
