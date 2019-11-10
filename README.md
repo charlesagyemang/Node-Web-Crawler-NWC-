@@ -25,3 +25,26 @@
 ``` javascript
   yarn test:coverage crawl.routes.test
 ```
+
+##### When you run the command observe the console messages like 'working....' when you see 'end' it means the program has finished running
+
+##### Navigate to the root folder you should see a folder called 'matchResults.com'. Open it and locate a file called index.ndjson. Open that File Thats The results. Thank You.
+
+
+### Api End Points
+#### POST
+#### URL '/api/crawl'
+#### Post Body
+```javascript
+{
+  domain: 'https://www.pianoafrikonline.com',
+  regexes: [
+    '/a/',
+    '/o/',
+    '(?:(?:http|https):\/\/)?(?:www.)?facebook.com\/(?:(?:\w)*#!\/)?(?:pages\/)?(?:[?\w\-]*\/)?(?:profile.php\?id=(?=\d.*))?([\w\-]*)?',
+    '/p/',
+    '/x/',
+  ],
+  numLevels: 3,
+}
+```
