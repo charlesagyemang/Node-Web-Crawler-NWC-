@@ -51,6 +51,8 @@ describe('Crowl::Routes', async () => {
         '/a/',
         '/o/',
         '(?:(?:http|https):\/\/)?(?:www.)?facebook.com\/(?:(?:\w)*#!\/)?(?:pages\/)?(?:[?\w\-]*\/)?(?:profile.php\?id=(?=\d.*))?([\w\-]*)?',
+        '/p/',
+        '/x/',
       ],
       numLevels: 3,
     });
