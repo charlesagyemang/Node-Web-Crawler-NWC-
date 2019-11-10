@@ -48,3 +48,14 @@
   numLevels: 3,
 }
 ```
+
+#### Response Body || Response Status == OK == 200
+
+``` javascript
+
+{
+  message: 'Success!! Check Your Root Folder And Look For A File Called matchResults.com and navigate to index.ndjson. Thats Your result File',
+  dom: 'pianoafrikonline.com'
+}
+
+```
