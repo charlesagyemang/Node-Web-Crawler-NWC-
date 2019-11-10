@@ -12,7 +12,7 @@ describe('Crowl::Routes', async () => {
   });
 
   it('Should Return 401 Badrequest if field or datatype expected is wrong', async () => {
-    const res = await request(server).post('/api/crawl/Match.trueRegexLinks/').send({
+    const res = await request(server).post('/api/crawl').send({
       domain: 'https://www.pianoafrikonline.com',
       regexe: [
         '',
@@ -30,7 +30,7 @@ describe('Crowl::Routes', async () => {
   });
 
   it('Should Return 200 Ok if body passed passes validation', async () => {
-    const res = await request(server).post('/api/crawl/Match.trueRegexLinks/').send({
+    const res = await request(server).post('/api/crawl').send({
       domain: 'https://www.pianoafrikonline.com',
       regexes: [
         '/a/',
@@ -44,8 +44,8 @@ describe('Crowl::Routes', async () => {
     expect(res.statusCode).toBe(HTTPStatus.OK);
   });
 
-  it.only('Should Crawl Site And Create A File In The Application Root Called matchResults', async () => {
-    const res = await request(server).post('/api/crawl/Match.trueRegexLinks/').send({
+  it('Should Crawl Site And Create A File In The Application Root Called matchResults', async () => {
+    const res = await request(server).post('/api/crawl').send({
       domain: 'https://www.pianoafrikonline.com',
       regexes: [
         '/a/',

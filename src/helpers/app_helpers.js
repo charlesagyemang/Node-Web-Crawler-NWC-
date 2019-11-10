@@ -38,34 +38,6 @@ export const convertRegexStringArrayToRegexArray = (regexArray) => {
   return returnArray;
 };
 
-export const sanitizeRegexFieldSub = (regexArray) => {
-  const sanitizedRegexes = [];
-  regexArray.forEach((regex) => {
-    const divide = regex.split('/');
-    if (divide.length === 2) {
-      if (divide[0].length > 1) {
-        sanitizedRegexes.push(`/${divide[0]}/`);
-        return;
-      }
-      sanitizedRegexes.push(`/${divide[1]}/`);
-      return;
-    }
-
-    if (divide.length === 1) {
-      if (divide[0] === '') {
-        sanitizedRegexes.push('');
-        return;
-      }
-      sanitizedRegexes.push(`/${divide[0]}/`);
-      return;
-    }
-
-    sanitizedRegexes.push(regex);
-  });
-  return sanitizedRegexes;
-};
-
-
 export const save = async (urlString, data) => {
   if (!urlString || !data) return false;
   const urlObject = url.parse(urlString);
@@ -86,42 +58,6 @@ export const save = async (urlString, data) => {
   }
 
   return true;
-};
-
-export const crawlSiteAdvance = async (regexes, scrapeUrl) => {
-  try {
-    const crl = new Crawler(scrapeUrl);
-    crl.crawl();
-
-    let mesophyll = '';
-
-    crl.on('data', (data) => {
-      if (data.result.statusCode === 200) {
-        const validUrlExtention = data.url.split('.com/')[1];
-        if (regexes.includes(`/${validUrlExtention}`) || validUrlExtention === '') {
-          if (validUrlExtention === '') {
-            mesophyll += `\n${JSON.stringify({ root: data.result.body })}`;
-          } else {
-            const obj = {};
-            obj[`${validUrlExtention.split('/')[0]}`] = data.result.body;
-            mesophyll += `\n${JSON.stringify(obj)}`;
-          }
-          console.log(data);
-          save('https://crawlResults.com/', mesophyll);
-        }
-      }
-    });
-
-    crl.on('error', (error) => {
-      console.log(error);
-    });
-
-    crl.on('end', () => {
-      console.log('end');
-    });
-  } catch (e) {
-    console.log(e);
-  }
 };
 
 
