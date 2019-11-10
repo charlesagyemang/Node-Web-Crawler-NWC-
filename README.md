@@ -5,7 +5,7 @@
 ##### Open Terminal And Copy The Command Below And Paste
 
 ``` javascript
-  git clone https://github.com/charlesagyemang/Node-Web-Crawler-NWC-.git
+  git clone https://github.com/charlesagyemang/Node-Web-Crawler-NWC-.git && cd Node-Web-Crawler-NWC-/
 ```
 
 #### Step 2
@@ -16,7 +16,7 @@
 ```
 
 #### Step 3
-###### Locate A file Called matchResults.com and delete it
+#### Locate A file Called matchResults.com and delete it
 
 
 #### Step 4
