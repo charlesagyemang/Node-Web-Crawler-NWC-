@@ -46,7 +46,7 @@ describe('Crowl::Routes', async () => {
     expect(res.body).toHaveProperty('dom');
   });
 
-  it.only('Should Site And Pull 5 regexes given and save file', async () => {
+  it('Should Site And Pull 5 regexes given and save file', async () => {
     const res = await request(server).post('/api/crawl/').send({
       domain: 'https://www.pianoafrikonline.com',
       regexes: [
@@ -63,5 +63,38 @@ describe('Crowl::Routes', async () => {
     expect(res.statusCode).toBe(HTTPStatus.OK);
     expect(res.body).toHaveProperty('dom');
     expect(res.body.message).toBe('File Saved In Path ./crawlResults');
-  }, 30000);
+  });
+
+  it('Should Return 401 Badrequest if field or datatype expected is wrong', async () => {
+    const res = await request(server).post('/api/crawl/Match.trueRegexLinks/').send({
+      domain: 'https://www.pianoafrikonline.com',
+      regexes: [
+        '',
+        '/book-us/',
+        'contact/',
+        '/courses',
+        'faq',
+        '/terms-and-conditions/',
+      ],
+      numLevels: 3,
+    });
+
+    console.log(res.body);
+    expect(res.statusCode).toBe(HTTPStatus.BAD_REQUEST);
+    expect(res.body.name).toBe('ValidationError');
+  });
+
+  it.only('Should Return 401 Badrequest if field or datatype expected is wrong', async () => {
+    const res = await request(server).post('/api/crawl/Match.trueRegexLinks/').send({
+      domain: 'https://www.pianoafrikonline.com',
+      regexes: [
+        '/a/',
+        '/o/',
+        '/p/',
+      ],
+      numLevels: 3,
+    });
+
+    expect(res.statusCode).toBe(HTTPStatus.OK);
+  });
 });

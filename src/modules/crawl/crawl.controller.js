@@ -1,5 +1,29 @@
 import HTTPStatus from 'http-status';
-import { sanitizeRegexField, crawlSiteAdvance, sanitizeDomain } from '../../helpers/app_helpers';
+import { sanitizeRegexField,
+         crawlSiteAdvance,
+         sanitizeDomain,
+         convertRegexStringArrayToRegexArray,
+         crawlAndMatchRegAndReturnAFile,
+       } from '../../helpers/app_helpers';
+
+export const matchLinksAgainstRegexGiven = async (req, res) => {
+  try {
+    // sanitize url
+    const sanitizedDomain = await sanitizeDomain(req.body.domain);
+
+    // sanitize string passed regexes
+    const sanitizedRegexes = await convertRegexStringArrayToRegexArray(req.body.regexes);
+
+    await crawlAndMatchRegAndReturnAFile(sanitizedRegexes, sanitizedDomain, req.body.domain.split('://')[0], req.body.numLevels);
+
+    res.status(HTTPStatus.OK).json({
+      message: 'File Saved In Path ./matching-results',
+      dom: sanitizedDomain,
+    });
+  } catch (e) {
+    console.log(e);
+  }
+};
 
 export const crawlSite = async (req, res) => {
   try {
