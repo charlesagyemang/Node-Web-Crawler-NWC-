@@ -4,24 +4,20 @@ import Crawler from 'node-html-crawler';
 
 
 const readFromArray = (regArray, givenArray) => {
-  const retObj = [];
+  const retObj = {};
   regArray.forEach((regex) => {
-    const objHead = `{"${regex}":[`;
-    const objTail = ']}\n';
     let objBody = '';
 
     givenArray.forEach((arr) => {
       if (regex.test(arr)) {
-        objBody += `"${arr}"301040`;
+        objBody += `${arr}301040`;
       }
     });
 
     objBody = objBody.split('301040');
     objBody = objBody.splice(0, objBody.length - 1).join(',');
 
-    const finalObject = objHead + objBody + objTail;
-
-    retObj.push(finalObject);
+    retObj[`${regex}`] = objBody.split(',');
   });
   return retObj;
 };
@@ -145,13 +141,14 @@ export const crawlAndMatchRegAndReturnAFile = async (
 
     const linkParker = [];
 
-    crl.on('data', (data) => {
+    crl.on('data', async (data) => {
       if (data.result.statusCode === 200) {
         const gottenLink = data.url;
         if (!linkParker.includes(gottenLink)) linkParker.push(gottenLink);
       }
 
-      const mappedData = readFromArray(regexes, linkParker);
+      const mappedData = await readFromArray(regexes, linkParker);
+      await save('https://matchResults.com/', JSON.stringify({ result: mappedData }));
       console.log(mappedData);
       console.log('Working.......');
     });
