@@ -17,7 +17,7 @@ export const matchLinksAgainstRegexGiven = async (req, res) => {
     await crawlAndMatchRegAndReturnAFile(sanitizedRegexes, sanitizedDomain, req.body.domain.split('://')[0], req.body.numLevels);
 
     res.status(HTTPStatus.OK).json({
-      message: 'File Saved In Path ./matching-results',
+      message: 'File Saved In Path ./matchResults',
       dom: sanitizedDomain,
     });
   } catch (e) {
